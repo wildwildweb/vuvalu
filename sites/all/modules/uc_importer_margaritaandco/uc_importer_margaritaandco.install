@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for uc_importer_margaritaandco module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function uc_importer_margaritaandco_uninstall() {
+  $query = db_select('variable', 'v')
+    ->fields('v', array('name'))
+    ->condition('name', db_like('uc_importer_margaritaandco') . '%', 'LIKE')
+    ->execute();
+  while ($variable = $query->fetchAssoc()) {
+    variable_del($variable['name']);
+  }
+}

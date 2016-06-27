@@ -1,0 +1,13 @@
+; $Id: $
+name = MailChimp Ubercart Checkout Subscribe Pane ** Modified version
+package = Ubercart - extra
+description = Provides a Mailchimp subscribe pane for Ubercart
+dependencies[] = uc_cart
+dependencies[] = uc_order
+dependencies[] = mailchimp
+
+; Information added by drupal.org packaging script on 2012-01-04
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "uc_mailchimp_subscribe"
+datestamp = "1325670949"

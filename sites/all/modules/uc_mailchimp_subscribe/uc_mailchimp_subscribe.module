@@ -1,0 +1,71 @@
+<?php
+/**
+ * Implements hook_uc_checkout_pane().
+ * Used to add a pane to the checkout
+ */
+function uc_mailchimp_subscribe_uc_checkout_pane() {
+  $panes['uc_mailchimp_subscribe'] = array(
+    'callback' => 'uc_mailchimp_subscribe_checkout_pane_callback',
+    'title' => t('Subscription Options'),
+    'desc' => t("Allow customers to subscribe to MailChimp."),
+    'weight' => 1,
+    'process' => FALSE,
+    'collapsible' => FALSE,
+  );
+  return $panes;
+}
+
+/**
+ * Callback which process the user's subscription option
+ */
+function uc_mailchimp_subscribe_checkout_pane_callback($op, $order, $form = NULL, &$form_state = NULL) {
+  switch ($op) {
+    case 'view':
+      $description = t('Would you like to subscribe to our newsletter?');
+      $default = TRUE;
+      $contents['subscribe'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Yes please!'),
+        '#default_value' => $default,
+      );
+      return array('description' => $description, 'contents' => $contents);
+
+    case 'process':
+      $order->data['subscribe'] = $form_state['input']['panes']['uc_mailchimp_subscribe']['subscribe'];
+      
+      
+
+    case 'review':
+    if ($order->data['subscribe'] == 1) {
+      $review = NULL;
+      $review[] = array('title' => t('Subscribe'), 'data' => 'Yes');
+      return $review;
+	}
+  }
+}
+
+/**
+ * Subscribes user to a list and adds an order admin comment.
+ */
+function uc_mailchimp_subscribe_to_list($account, $order) {
+  // Check for mailchimp subscription fields and unsubscribe accordingly.
+  $field = field_info_field('field_mailchimp');
+  $type = 'user';
+  $entity = $account;
+  $wrapper = entity_metadata_wrapper($type, $entity);
+  if (in_array($wrapper->getBundle(), $field['bundles'][$type])) {
+	$instance = field_info_instance($type, $field['field_name'], $wrapper->getBundle());
+    mailchimp_lists_process_subscribe_form_choices(array('subscribe' => TRUE), $instance, $field, $entity);
+  }
+}
+
+/**
+ * Implementation of hook_uc_checkout_complete()
+ * Used to subscribe the user if they have opted in
+ */
+
+function uc_mailchimp_subscribe_uc_checkout_complete($order, $account) {
+	if ($order->data['subscribe'] == 1) {
+		uc_mailchimp_subscribe_to_list($account, $order);
+	}
+}

@@ -1,0 +1,8 @@
+name = Ubercart product importer and updater for margaritaandco.com
+description = Provides import and update of products with attributes and stock data via CSV files
+core = 7.x
+dependencies[] = uc_stock
+dependencies[] = uc_attribute
+version = 7.x-1.0
+package = Ubercart - extra
+files[] = ReadCSV.inc

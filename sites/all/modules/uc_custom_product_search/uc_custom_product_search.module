@@ -1,0 +1,223 @@
+<?php
+
+/**
+* @file
+* Custom product search for Ubercart.
+*/
+
+
+/**
+ * Implementation of hook_views_api().
+ */
+function uc_custom_product_search_views_api() {
+  return array(
+    'api' => 3,
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function uc_custom_product_search_menu() {
+  $items = array();
+  $items['admin/store/settings/product-search'] = array(
+    'title' => 'Uc Custom product search settings',
+    'description' => 'Configure settings for Uc Custom product search.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('uc_custom_product_search_settings_form'),
+    'access arguments' => array('administer products'),
+    'file' => 'uc_custom_product_search.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function uc_custom_product_search_block_info() {
+  $blocks['uc_custom_product_search'] = array(
+    'info' => t('Uc Custom product search'),
+    'properties' => array('administrative' => TRUE),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function uc_custom_product_search_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'uc_custom_product_search':
+      $block['subject'] = t('Search products');
+      $block['content'] = drupal_get_form('uc_custom_product_search_form');
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function uc_custom_product_search_theme() {
+  return array(
+    'uc_custom_product_search' => array(
+      'variables' => array('form' => NULL),
+      'file' => 'uc_custom_product_search.theme.inc',
+    ),
+  );
+}
+
+/**
+ * Define a form to search products.
+ */
+function uc_custom_product_search_form($form, &$form_state) {
+  $query = drupal_get_query_parameters();
+  $form['uc_custom_product_search']['terms'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Select one or more garments'),
+    '#collapsible' => FALSE,
+  );
+  $parent_terms = taxonomy_term_load_multiple(variable_get('uc_custom_product_search_parent_terms', array()));
+  foreach($parent_terms as $tid => $term) {
+    $form['uc_custom_product_search']['terms']["tid-$tid"] = array(
+      '#type' => 'fieldset',
+      '#title' => check_plain($term->name),
+      '#collapsible' => FALSE,
+    );
+    $form['uc_custom_product_search']['terms']["tid-$tid"]["all_$tid"] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Check all'),
+      '#attributes' => array('class' => array('check-all')),
+    );
+    $checkboxes = uc_custom_product_search_term_children_checkboxes($tid);
+    $default_value = array();
+    foreach ($checkboxes as $term_tid => $value) {
+      if (isset($query['catalogo']) && in_array($term_tid, $query['catalogo'])) {
+        $default_value[$term_tid] = $term_tid;
+      }
+      else {
+        $default_value[$term_tid] = 0;
+      }
+    }
+    $form['uc_custom_product_search']['terms']["tid-$tid"]["children_$tid"] = array(
+      '#type' => 'checkboxes',
+      '#options' => $checkboxes,
+      '#default_value' => $default_value,
+    );
+  }
+
+  $form['uc_custom_product_search']['options'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Select one or more sizes'),
+    '#collapsible' => FALSE,
+  );
+  $attributes = array(
+    '1' => uc_attribute_load(variable_get('uc_custom_product_search_attribute_size_1', '')),
+  );
+  foreach ($attributes as $key => $attribute) {
+    $form['uc_custom_product_search']['options']["size_$key"] = array(
+      '#type' => 'fieldset',
+      '#title' => check_plain($attribute->name),
+      '#collapsible' => FALSE,
+    );
+    $checkboxes = uc_custom_product_search_attribute_options_checkboxes_search(variable_get('uc_custom_product_search_attribute_size_' . $key . '_options', array()));
+    $default_value = array();
+    foreach ($checkboxes as $oid => $value) {
+      if (isset($query['talla_'. $key]) && in_array($oid, $query['talla_'. $key])) {
+        $default_value[$oid] = $oid;
+      }
+      else {
+        $default_value[$oid] = 0;
+      }
+    }
+    $form['uc_custom_product_search']['options']["size_$key"]["options_size_$key"] = array(
+      '#type' => 'checkboxes',
+      '#options' => $checkboxes,
+      '#default_value' => $default_value,
+    );
+  }
+
+  $form['#attached']['js'][] = drupal_get_path('module', 'uc_custom_product_search') . '/uc_custom_product_search.js';
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Search'),
+  );
+  return $form;
+}
+
+/**
+ * Handle post-validation form submission.
+ */
+function uc_custom_product_search_form_submit($form, &$form_state) {
+  $params = array();
+  foreach ($form_state['values'] as $name => $values) {
+    if (substr($name, 0, 8) == 'children') {
+      foreach ($values as $key => $value) {
+        if ($value != '0') {
+          $params['catalogo'][] = $key;
+        }
+      }
+    }
+    if ($name == 'options_size_1') {
+      foreach ($values as $key => $value) {
+        if ($value != '0') {
+          $params['talla_1'][] = $key;
+        }
+      }
+    }
+  }
+  $form_state['redirect'] = array('buscador-productos', array('query' => $params));
+}
+
+/**
+ * Helper function to select all attributes available.
+ */
+function uc_custom_product_search_attributes_select() {
+  $attributes = uc_attribute_load_multiple();
+  $result = array();
+  foreach ($attributes as $aid => $attribute) {
+    $result[$aid] = check_plain($attribute->name);
+  }
+  return $result;
+}
+
+/**
+ * Helper function to get checkboxes for options of an attribute.
+ */
+function uc_custom_product_search_attribute_options_checkboxes($attribute) {
+  $result = array();
+  foreach ($attribute->options as $oid => $option) {
+    $result[$oid] = check_plain($option->name);
+  }
+  return $result;
+}
+
+/**
+ * Helper function to get checkboxes for children of a term.
+ */
+function uc_custom_product_search_term_children_checkboxes($tid) {
+  $result = array();
+  $terms = taxonomy_get_children($tid, variable_get('uc_custom_product_search_vocabulary', ''));
+  foreach ($terms as $tid => $term) {
+    $result[$tid] = check_plain($term->name);
+  }
+  return $result;
+}
+
+/**
+ * Helper function to get checkboxes for options of an attribute marked
+ * to use in search.
+ */
+function uc_custom_product_search_attribute_options_checkboxes_search($options) {
+  $result = array();
+  foreach ($options as $oid => $value) {
+    if ($value != '0') {
+      $option = uc_attribute_option_load($oid);
+      $result[$oid] = check_plain($option->name);
+    }
+  }
+  return $result;
+}

@@ -1,0 +1,13 @@
+diff --git a/htmlmail.mail.inc b/htmlmail.mail.inc
+index d882c5c..16fe7cd 100644
+--- a/htmlmail.mail.inc
++++ b/htmlmail.mail.inc
+@@ -46,7 +46,7 @@ class HTMLMailSystem implements MailSystemInterface {
+     }
+     else {
+       if (is_array($message['body'])) {
+-        $message['body'] = implode("<br />$eol<br />$eol", $message['body']);
++        $message['body'] = implode("$eol$eol", $message['body']);
+       }
+       $body = theme('htmlmail', $message);
+       if ($message['body'] && !$body) {

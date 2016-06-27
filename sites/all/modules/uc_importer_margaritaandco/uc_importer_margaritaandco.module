@@ -1,0 +1,247 @@
+<?php
+
+/**
+ * @file
+ *
+ * Ubercart product importer and updater for margaritaandco.com
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function uc_importer_margaritaandco_cron() {
+  if (variable_get('uc_importer_margaritaandco_enable', TRUE)) {
+    $date = time();
+    uc_importer_margaritaandco_import_file($date);
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function uc_importer_margaritaandco_menu() {
+  $items = array();
+  $items['admin/store/settings/importer'] = array(
+    'title' => 'Ubercart product importer settings',
+    'description' => 'Configure settings for ubercart product importer and updater for margaritaandco.com.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('uc_importer_margaritaandco_settings_form'),
+    'access arguments' => array('administer products'),
+    'file' => 'uc_importer_margaritaandco.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Helper function to select all attributes available.
+ */
+function uc_importer_margaritaandco_attributes_select() {
+  $attributes = uc_attribute_load_multiple();
+  $result = array();
+  foreach ($attributes as $aid => $attribute) {
+    $result[$aid] = check_plain($attribute->name);
+  }
+  return $result;
+}
+
+/**
+ * Process a file.
+ * @param $date
+ * @return array
+ */
+function uc_importer_margaritaandco_import_file($date) {
+  $files = file_scan_directory(variable_get('uc_importer_margaritaandco_import_folder', 'public://uc-importer-margaritaandco/import'), '/.*\.csv$/');
+  if (empty($files) || count($files) > 1) {
+    watchdog('uc_importer_margaritaandco', 'No files or too many files in import folder.', array(), WATCHDOG_ERROR);
+  }
+  else {
+    $file = array_shift($files);
+    $results = uc_importer_margaritaandco_read_file($file->uri, $delimiter = ',');
+    if (!empty($results['errors'])) {
+      watchdog('uc_importer_margaritaandco', 'There were some errors while reading csv file: <pre>@print_r</pre>', array('@print_r' => print_r($results['errors'], TRUE)), WATCHDOG_ERROR);
+    }
+    else {
+      // Reset stocks for all products before update.
+      db_update('uc_product_stock')
+        ->fields(array(
+          'stock' => 0,
+        ))
+        ->execute();
+      $processed_rows = 0;
+      $attribute = uc_attribute_load(variable_get('uc_importer_margaritaandco_attribute', ''));
+      $references = array();
+      foreach ($attribute->options as $oid => $option) {
+        $references[] = variable_get("uc_importer_margaritaandco_option_$oid", '');
+      }
+      foreach ($results['rows'] as $key => $row) {
+        if ($key != 0) {
+          // Check if is a valid external reference.
+          $proceed = FALSE;
+          if (in_array($row[1], $references)) {
+            $proceed = TRUE;
+          }
+          if ($proceed) {
+            $pos = strpos($row[0], '.');
+            $sku = trim(substr($row[0], 0, $pos));
+            $nid = uc_importer_margaritaandco_get_nid_from_sku($sku);
+            if (!empty($nid)) {
+              // Product exists, check if attribute is on and adjust stock.
+              $product = node_load($nid);
+              $adjustments = array();
+              $attribute = uc_attribute_load(variable_get('uc_importer_margaritaandco_attribute', ''));
+              foreach ($attribute->options as $oid => $option) {
+                if (variable_get("uc_importer_margaritaandco_option_$oid", '') == $row[1]) {
+                  if (!isset($product->attributes[$attribute->aid]->options[$oid])) {
+                    if (!isset($product->attributes[$attribute->aid])) {
+                      $new_attribute = uc_attribute_load(variable_get('uc_importer_margaritaandco_attribute', ''));
+                      $new_attribute->options = array();
+                    }
+                    else {
+                      $new_attribute = $product->attributes[$attribute->aid];
+                    }
+                    $new_attribute->options[$oid] = $option;
+                    uc_attribute_subject_save($new_attribute, 'product', $nid, TRUE);
+                    $adjustments[] = array(
+                      'nid' => $nid,
+                      'combination' => serialize(array($option->aid => $option->oid)),
+                      'model' => $row[0],
+                    );
+                    $query = db_insert('uc_product_adjustments')->fields(array('nid', 'combination', 'model'));
+                    foreach ($adjustments as $record) {
+                      $query->values($record);
+                    }
+                    $query->execute();
+                  }
+                }
+              }
+
+              db_merge('uc_product_stock')
+                ->key(array('sku' => $row[0]))
+                ->updateFields(array(
+                  'stock' => $row[4],
+                ))
+                ->insertFields(array(
+                  'sku' => $row[0],
+                  'active' => 1,
+                  'stock' => $row[4],
+                  'threshold' => 0,
+                  'nid' => $nid,
+                ))
+                ->execute();
+				//watchdog('uc_importer_margaritaandco', 'Product with nid %nid updated, row %row: <pre>@print_r</pre>', array('@print_r' => print_r($row, TRUE), '%nid' => $nid, '%row' => $key), WATCHDOG_INFO);
+            }
+            else {
+              // No product, create it and adjust stock
+              $new_node = new stdClass();
+              $new_node->type = variable_get('uc_importer_margaritaandco_content_type', '');
+              node_object_prepare($new_node);
+              $new_node->status = 0;
+              $new_node->uid = 1;
+              $new_node->name = 'admin';
+              $new_node->language = language_default('language');
+
+              $new_node->title = utf8_encode($row[2]);
+
+              // Required ubercart fields.
+              $new_node->model = $sku;
+              $new_node->list_price = 0;
+              $new_node->cost = $row[3];
+              $new_node->sell_price = $row[3];
+              $new_node->weight_units = 'kg';
+              $new_node->length_units = 'cm';
+              foreach (array('width', 'height', 'length', 'weight') as $attr) {
+                $new_node->{$attr} = 0;
+              }
+              foreach (array('pkg_qty', 'default_qty', 'shippable') as $attr) {
+                $new_node->{$attr} = 1;
+              }
+
+              node_save($new_node);
+
+              // Update product attributes.
+              $adjustments = array();
+              $attribute = uc_attribute_load(variable_get('uc_importer_margaritaandco_attribute', ''));
+              foreach ($attribute->options as $oid => $option) {
+                if (variable_get("uc_importer_margaritaandco_option_$oid", '') != $row[1]) {
+                  unset($attribute->options[$oid]);
+                }
+                else {
+                  $attribute->default_option = $oid;
+                  $adjustments[] = array(
+                    'nid' => $new_node->nid,
+                    'combination' => serialize(array($option->aid => $option->oid)),
+                    'model' => $row[0],
+                  );
+                }
+              }
+              uc_attribute_subject_save($attribute, 'product', $new_node->nid, TRUE);
+
+              // Insert product option adjustment.
+              $query = db_insert('uc_product_adjustments')->fields(array('nid', 'combination', 'model'));
+              foreach ($adjustments as $record) {
+                $query->values($record);
+              }
+              $query->execute();
+
+              // Set and activate stock.
+              db_merge('uc_product_stock')
+                ->key(array('sku' => $row[0]))
+                ->updateFields(array(
+                  'stock' => $row[4],
+                ))
+                ->insertFields(array(
+                  'sku' => $row[0],
+                  'active' => 1,
+                  'stock' => $row[4],
+                  'threshold' => 0,
+                  'nid' => $new_node->nid,
+                ))
+                ->execute();
+			  //watchdog('uc_importer_margaritaandco', 'Product created, row %row : <pre>@print_r</pre>', array('@print_r' => print_r($row, TRUE), '%row' => $key), WATCHDOG_INFO);
+            }
+            $processed_rows++;
+          }
+        }
+      }
+      $destination = variable_get('uc_importer_margaritaandco_processed_folder', 'public://uc-importer-margaritaandco/processed');
+      $processed_uri = file_stream_wrapper_uri_normalize($destination . '/' . $file->name . '_' . $date . '.' . strtolower(pathinfo($file->uri, PATHINFO_EXTENSION)));
+      file_unmanaged_copy($file->uri, $processed_uri);
+      watchdog('uc_importer_margaritaandco', 'The file %filename was imported, %processed_rows rows processed.', array('%filename' => $file->filename, '%processed_rows' => $processed_rows), WATCHDOG_INFO);
+      //file_unmanaged_delete($file->uri);
+    }
+  }
+}
+
+/**
+ * Read csv file and return one element per row.
+ * @param $filepath
+ * @param string $delimiter
+ * @return array
+ */
+function uc_importer_margaritaandco_read_file($filepath, $delimiter = ',') {
+  $results = array(
+    'rows' => array(),
+    'errors' => array(),
+  );
+  try {
+    $csv_reader = new ReadCSV($filepath, $delimiter, "\xEF\xBB\xBF", 0);
+  }
+  catch (Exception $e) {
+    $results['errors'][] = check_plain($e->getMessage());
+    return $results;
+  }
+  while (($line = $csv_reader->get_row()) !== NULL) {
+    $results['rows'][] = $line;
+  }
+  return $results;
+}
+
+/**
+ * Lookup a node with the provided sku.
+ * @param $sku
+ * @return mixed
+ */
+function uc_importer_margaritaandco_get_nid_from_sku($sku) {
+  $nid = db_query('SELECT u.nid FROM {uc_products} u WHERE u.model = :sku', array(':sku' => $sku))->fetchColumn();
+  return $nid;
+}
