@@ -33,7 +33,7 @@
 <p>&nbsp;</p>
 
 <center>
-<img src="/sites/all/themes/margaritaandco/images/under.jpg" />
+<img src="/sites/all/themes/vuvalu/images/under.jpg" />
 <br />
 <br />
     <?php print $messages; ?>

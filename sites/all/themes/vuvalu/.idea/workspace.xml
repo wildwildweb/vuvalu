@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4399c108-4fc3-4782-8505-9f42a2eaf8a3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/addthis.inc.php" afterPath="$PROJECT_DIR$/addthis.inc.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/htmlmail.tpl.php" afterPath="$PROJECT_DIR$/htmlmail.tpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/maintenance-page.tpl.php" afterPath="$PROJECT_DIR$/maintenance-page.tpl.php" />
     </list>
     <ignored path="vuvalu.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,11 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="htmlmail.tpl.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="htmlmail.tpl.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/htmlmail.tpl.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.60071516">
-              <caret line="142" column="51" selection-start-line="142" selection-start-column="51" selection-end-line="142" selection-end-column="51" />
+            <state vertical-scroll-proportion="-50.576923">
+              <caret line="183" column="58" selection-start-line="183" selection-start-column="58" selection-end-line="183" selection-end-column="58" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="maintenance-page.tpl.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/maintenance-page.tpl.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5268176">
+              <caret line="35" column="34" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -49,6 +57,7 @@
         <option value="$PROJECT_DIR$/template.php" />
         <option value="$PROJECT_DIR$/addthis.inc.php" />
         <option value="$PROJECT_DIR$/htmlmail.tpl.php" />
+        <option value="$PROJECT_DIR$/maintenance-page.tpl.php" />
       </list>
     </option>
   </component>
@@ -238,8 +247,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/htmlmail.tpl.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.60071516">
-          <caret line="142" column="51" selection-start-line="142" selection-start-column="51" selection-end-line="142" selection-end-column="51" />
+        <state vertical-scroll-proportion="-50.576923">
+          <caret line="183" column="58" selection-start-line="183" selection-start-column="58" selection-end-line="183" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/maintenance-page.tpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5268176">
+          <caret line="35" column="34" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
           <folding />
         </state>
       </provider>
