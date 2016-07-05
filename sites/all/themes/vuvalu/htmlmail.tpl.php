@@ -128,7 +128,7 @@
 	  <table width="620" align="center" border="0" bgcolor="#39d6c5" cellspacing="0" cellpadding="20" style="-webkit-border-radius:8px;border-radius:8px;-moz-border-radius:8px;">
 	        <tr>
 	          <td height="69" align="center" valign="top" bgcolor="#ffffff">
-	          <img src="<?php print $base_url .'/sites/all/themes/margaritaandco/images/bg-logo.png'; ?>" alt="Margarita and Co. Moda Infantil" title="Margarita and Co. Moda Infantil" border="0">
+	          <img src="<?php print $base_url .'/sites/all/themes/vuvalu/images/bg-logo.png'; ?>" alt="Vuvalu Moda Infantil" title="Vuvalu Moda Infantil" border="0">
 	          </td>
 	        </tr>
 	        <tr>
@@ -140,7 +140,7 @@
 	        <tr>
 	          <td>
 				<font face="Verdana, Arial, Helvetica, sans-serif" color="#888888" size="1">
-				<p> &copy; <?php print date('Y'); ?> Margarita and Co. Moda Infantil</p></font>
+				<p> &copy; <?php print date('Y'); ?> Vuvalu Moda Infantil</p></font>
 			  </td>
 			</tr>
 	  </table>
