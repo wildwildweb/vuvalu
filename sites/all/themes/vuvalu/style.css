@@ -672,7 +672,7 @@ header {
 }
 
 a#logo {
-  background: url("images/bg-logo.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+  background: url("images/bg-logo.svg") no-repeat scroll left top rgba(0, 0, 0, 0);
   display: block;
   height: 109px;
   margin: 0 auto;
@@ -1121,7 +1121,7 @@ span.envio {
 }
 
 #prefooter h2 {
-  background: url("images/logo-footer.jpg") no-repeat center center;
+  background: url("images/bg-logo-footer.svg") no-repeat center center;
   height: 68px;
   margin-top: -80px;
   text-align: center;
