@@ -125,10 +125,10 @@
 <td width="100%" style="background-color:#39d6c5;" bgcolor="#39d6c5" style="font-family:'lucida grande',tahoma,verdana,arial,sans-serif">
 
 	<center>
-	  <table width="620" align="center" border="0" bgcolor="#39d6c5" cellspacing="0" cellpadding="20" style="-webkit-border-radius:8px;border-radius:8px;-moz-border-radius:8px;">
+	  <table width="620" align="center" border="0" bgcolor="#d1d1d1" cellspacing="0" cellpadding="20" style="-webkit-border-radius:8px;border-radius:8px;-moz-border-radius:8px;">
 	        <tr>
 	          <td height="69" align="center" valign="top" bgcolor="#ffffff">
-	          <img src="<?php print $base_url .'/sites/all/themes/vuvalu/images/bg-logo.png'; ?>" alt="Vuvalu Moda Infantil" title="Vuvalu Moda Infantil" border="0">
+	          <img src="<?php print $base_url .'/sites/all/themes/vuvalu/images/bg-logo-email.png'; ?>" alt="Vuvalu Moda Infantil" title="Vuvalu Moda Infantil" border="0">
 	          </td>
 	        </tr>
 	        <tr>
