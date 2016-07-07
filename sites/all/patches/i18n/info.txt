@@ -1,0 +1,4 @@
+Módulo: Internationalization
+Título: Notice: Trying to get property of non-object in i18n_taxonomy_term_name() (line 461
+Issue: https://www.drupal.org/node/2733095
+Versiones: i18n (7.x-1.13)
