@@ -137,10 +137,6 @@ a:focus {
   outline: none;
 }
 
-a img:hover {
-  opacity: 0.8;
-}
-
 sup,
 sub {
   position : relative;
@@ -875,96 +871,56 @@ nav .sf-menu li a {
 /* node-pagina  ___________________ */
 
 /* productos relacionados ___________________ */
-#block-views-productos-relacionados-block-1 {
-  display: block;
-  margin: 80px 0;
-}
 
-#block-views-productos-lookbook-block {
-  display: block;
-  margin: 34px 0 80px 0;
-}
-
-#block-views-productos-relacionados-block-1 h2, 
-#block-views-productos-lookbook-block h2 {
-  text-align: center;
-  font-size: 100%;
-  letter-spacing: 2px;
-}
-
-#block-views-productos-relacionados-block-1 .views-row {
-  display: block;
-  float: left;
-  margin-right: 2%;
-  width: 32%;
-  position: relative;
-}
-
-#block-views-productos-relacionados-block-1 .views-row-last {
-  margin-right: 0;
-}
 
 /* view-productos ___________________ */
-#block-views-productos-block-1 h2 {
-  text-align: center;
+.page-productos #content {
+	width: 70%;
+	float: right;
 }
 
-.view-productos .views-row, 
-.view-uc-custom-product-search .views-row {
-  float: left;
-  margin-right: 2%;
-  margin-bottom: 2%;
-  width: 23.5%;
-  min-height: 325px;
+.page-productos #sidebar {
+	width: 25%;
+	float: left;
 }
 
-.view-productos .views-row-4, 
-.view-productos .views-row-8,
-.view-productos .views-row-12,
-.view-productos .views-row-16,
-.view-productos .views-row-20, 
-.view-productos .views-row-24, 
-.view-productos .views-row-28, 
-.view-uc-custom-product-search .views-row-4, 
-.view-uc-custom-product-search .views-row-8,
-.view-uc-custom-product-search .views-row-12,
-.view-uc-custom-product-search .views-row-16,
-.view-uc-custom-product-search .views-row-20, 
-.view-uc-custom-product-search .views-row-24, 
-.view-uc-custom-product-search .views-row-28 {
-  margin-right: 0;
+.page-productos .view-listado-productos .views-row {
+    display: block;
+    float: left;
+    width: 32%;
+	margin: 0 2% 8% 0;
 }
 
-.view-productos .views-field-title a, 
-.view-uc-custom-product-search .views-field-title a,
-.view-productos-relacionados .views-field-title a  {
-  display: block;
-  font-weight: 700;
-  margin-top: 5px;
-  text-align: center;
+.page-productos .view-listado-productos .views-row:nth-child(3n) {
+	margin-right: 0;
 }
 
-.view-productos .views-field-display-price, 
-.view-uc-custom-product-search .views-field-display-price,
-.view-productos-relacionados .views-field-display-price {
-  text-align: center;
-  border-top: 1px solid #b2b2b2;
-  margin-top: 5px;
-  padding-top: 5px;
-  font-weight: 700;
+.page-productos .view-listado-productos .views-row:nth-child(3n+1) {
+    clear: left;
 }
 
-.view-productos .views-field-display-price .precio-tachado, 
-.view-uc-custom-product-search .views-field-display-price .precio-tachado, 
-.view-productos-relacionados .views-field-display-price .precio-tachado {
-  color: #bababa;
-  text-decoration: line-through;
-  font-weight: 100;
-  margin-right: 5px;
+.view-listado-productos .views-field-title-field a  {
+	color: $negro;
+	text-transform: uppercase;
+	margin: 10px 0;
+	letter-spacing: 2px;
+	display: block;
 }
 
-.agotado {
-  display: none;
+.view-listado-productos .views-field-views-conditional {
+    float: left;
+    margin-right: 10px;
+    text-decoration: line-through;
+	letter-spacing: 1px;
+}
+
+.view-listado-productos .views-field-sell-price {
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.view-listado-productos .ihe-overlay:before {
+    background-color: #ff4dad;
 }
 
 
@@ -1477,9 +1433,6 @@ footer .block h2 {
   vertical-align: top;
 }
 
-.field-name-field-contenido {
-  margin: 5px 0;
-}
 
 /* admin panel ___________________*/
 #block-block-11 {
@@ -1889,6 +1842,20 @@ div.status a {
 	display: none;
 }
 
+.field-name-field-blog-addthis, 
+.field-name-disqus-bloque-, 
+.field-name-art-culos-relacionados {
+	margin-top: 60px;
+}
+
+.node-type-blog .field-name-art-culos-relacionados .field-name-field-blog-imagen {
+	margin: 0;
+}
+
+.node-type-blog .field-name-art-culos-relacionados .views-row .views-field-title-1 a {
+  font-size: 110%;
+}
+
 /* buscador por tallas ___________________ */
 #uc-custom-product-search-form {
   margin-top: 60px;
@@ -1938,7 +1905,8 @@ div.status a {
 /* hover rosa ___________________ */
 #prefooter .content #block-menu-menu-informaci-n li a:hover, 
 #postfooter #block-block-5 a:hover, 
-.view-blog .views-row .views-field-title-1 a:hover {
+.view-blog .views-row .views-field-title-1 a:hover, 
+.view-listado-productos .views-field-title-field a:hover {
 	color: $rosa;
 }
 
