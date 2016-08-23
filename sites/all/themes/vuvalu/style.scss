@@ -37,6 +37,12 @@ $tipo: "futura-pt", arial, helvetica, sans-serif !default;
   display: inline-block;
 }
 
+@mixin ancho540 {
+  width: 90%;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
 @mixin box-sizing {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -91,6 +97,7 @@ body {
 img {
   height: auto;
   width: 100%;
+  display: block;
 }
 
 
@@ -462,99 +469,6 @@ ul li.leaf {
   margin-right: 0;
 }
 
-/* productos relacionados ___________________ */
-#block-views-productos-relacionados-block-1 {
-  display: block;
-  margin: 80px 0;
-}
-
-#block-views-productos-lookbook-block {
-  display: block;
-  margin: 34px 0 80px 0;
-}
-
-#block-views-productos-relacionados-block-1 h2, 
-#block-views-productos-lookbook-block h2 {
-  text-align: center;
-  font-size: 100%;
-  letter-spacing: 2px;
-}
-
-#block-views-productos-relacionados-block-1 .views-row {
-  display: block;
-  float: left;
-  margin-right: 2%;
-  width: 32%;
-  position: relative;
-}
-
-#block-views-productos-relacionados-block-1 .views-row-last {
-  margin-right: 0;
-}
-
-/* view-productos ___________________ */
-#block-views-productos-block-1 h2 {
-  text-align: center;
-}
-
-.view-productos .views-row, 
-.view-uc-custom-product-search .views-row {
-  float: left;
-  margin-right: 2%;
-  margin-bottom: 2%;
-  width: 23.5%;
-  min-height: 325px;
-}
-
-.view-productos .views-row-4, 
-.view-productos .views-row-8,
-.view-productos .views-row-12,
-.view-productos .views-row-16,
-.view-productos .views-row-20, 
-.view-productos .views-row-24, 
-.view-productos .views-row-28, 
-.view-uc-custom-product-search .views-row-4, 
-.view-uc-custom-product-search .views-row-8,
-.view-uc-custom-product-search .views-row-12,
-.view-uc-custom-product-search .views-row-16,
-.view-uc-custom-product-search .views-row-20, 
-.view-uc-custom-product-search .views-row-24, 
-.view-uc-custom-product-search .views-row-28 {
-  margin-right: 0;
-}
-
-.view-productos .views-field-title a, 
-.view-uc-custom-product-search .views-field-title a,
-.view-productos-relacionados .views-field-title a  {
-  display: block;
-  font-weight: 700;
-  margin-top: 5px;
-  text-align: center;
-}
-
-.view-productos .views-field-display-price, 
-.view-uc-custom-product-search .views-field-display-price,
-.view-productos-relacionados .views-field-display-price {
-  text-align: center;
-  border-top: 1px solid #b2b2b2;
-  margin-top: 5px;
-  padding-top: 5px;
-  font-weight: 700;
-}
-
-.view-productos .views-field-display-price .precio-tachado, 
-.view-uc-custom-product-search .views-field-display-price .precio-tachado, 
-.view-productos-relacionados .views-field-display-price .precio-tachado {
-  color: #bababa;
-  text-decoration: line-through;
-  font-weight: 100;
-  margin-right: 5px;
-}
-
-.agotado {
-  display: none;
-}
-
 /* messages ___________________ */
 #messages {
   padding: 20px 0 5px;
@@ -567,14 +481,36 @@ ul li.leaf {
 }
 
 /* headers ___________________ */
-h1, h2 {
+h1 {
+    display: block;
+    font-size: 150%;
+    font-weight: 100;
+    letter-spacing: 2px;
+    margin-bottom: 60px;
+    padding-bottom: 15px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h1:after {
+    border-bottom: 1px solid $negro;
+    bottom: 0;
+    content: "";
+    left: 0;
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    width: 30px;
+}
+
+h2 {
   display: block;
   font-weight: 700;
   margin-bottom: 20px;
   padding-bottom: 15px;
   text-transform: uppercase;
 }
-
 
 /* header ___________________ */
 header {
@@ -785,8 +721,10 @@ nav .sf-menu li a {
 
 /* main  ___________________ */
 #main {
-  margin: 0 auto;
-  text-align: left;
+	@include ancho;
+	margin: 80px auto;
+    text-align: left;
+  
 }
 
 /* precontent  ___________________ */
@@ -935,10 +873,100 @@ nav .sf-menu li a {
 }
 
 /* node-pagina  ___________________ */
-.node-type-pagina h1 {
-  font-size: 180%;
-  font-weight: 100;
+
+/* productos relacionados ___________________ */
+#block-views-productos-relacionados-block-1 {
+  display: block;
+  margin: 80px 0;
 }
+
+#block-views-productos-lookbook-block {
+  display: block;
+  margin: 34px 0 80px 0;
+}
+
+#block-views-productos-relacionados-block-1 h2, 
+#block-views-productos-lookbook-block h2 {
+  text-align: center;
+  font-size: 100%;
+  letter-spacing: 2px;
+}
+
+#block-views-productos-relacionados-block-1 .views-row {
+  display: block;
+  float: left;
+  margin-right: 2%;
+  width: 32%;
+  position: relative;
+}
+
+#block-views-productos-relacionados-block-1 .views-row-last {
+  margin-right: 0;
+}
+
+/* view-productos ___________________ */
+#block-views-productos-block-1 h2 {
+  text-align: center;
+}
+
+.view-productos .views-row, 
+.view-uc-custom-product-search .views-row {
+  float: left;
+  margin-right: 2%;
+  margin-bottom: 2%;
+  width: 23.5%;
+  min-height: 325px;
+}
+
+.view-productos .views-row-4, 
+.view-productos .views-row-8,
+.view-productos .views-row-12,
+.view-productos .views-row-16,
+.view-productos .views-row-20, 
+.view-productos .views-row-24, 
+.view-productos .views-row-28, 
+.view-uc-custom-product-search .views-row-4, 
+.view-uc-custom-product-search .views-row-8,
+.view-uc-custom-product-search .views-row-12,
+.view-uc-custom-product-search .views-row-16,
+.view-uc-custom-product-search .views-row-20, 
+.view-uc-custom-product-search .views-row-24, 
+.view-uc-custom-product-search .views-row-28 {
+  margin-right: 0;
+}
+
+.view-productos .views-field-title a, 
+.view-uc-custom-product-search .views-field-title a,
+.view-productos-relacionados .views-field-title a  {
+  display: block;
+  font-weight: 700;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.view-productos .views-field-display-price, 
+.view-uc-custom-product-search .views-field-display-price,
+.view-productos-relacionados .views-field-display-price {
+  text-align: center;
+  border-top: 1px solid #b2b2b2;
+  margin-top: 5px;
+  padding-top: 5px;
+  font-weight: 700;
+}
+
+.view-productos .views-field-display-price .precio-tachado, 
+.view-uc-custom-product-search .views-field-display-price .precio-tachado, 
+.view-productos-relacionados .views-field-display-price .precio-tachado {
+  color: #bababa;
+  text-decoration: line-through;
+  font-weight: 100;
+  margin-right: 5px;
+}
+
+.agotado {
+  display: none;
+}
+
 
 /* node-product  ___________________ */
 .uc-product-node .node-left {
@@ -1780,42 +1808,85 @@ div.status a {
 
 /* view-blog ___________________ */
 .view-blog .views-row {
-  width: 48%;
-  float: left;
-  margin-bottom: 50px;
+	margin-bottom: 8%;
 }
 
 .view-blog .views-row-odd {
-  margin-right: 4%;
+	width: 48%;
+	float: left;
+	clear: left;
+}
+
+.view-blog .views-row-even {
+    width: 48%;
+	float: right;
+}
+
+.view-blog .views-field-created {
+	margin: 15px 0 5px;
+	font-size: 90%;
+	color: #6b6b6b;
 }
 
 .view-blog .views-row .views-field-title-1 a {
-  font-size: 150%;
-  font-weight: 500;
-  line-height: 110%;
+    color: $negro;
+    font-size: 140%;
+    font-weight: 900;
+    line-height: 110%;
+    text-transform: uppercase;
+}
+
+.field-name-field-blog-imagen .ihe-overlay::before {
+    background-color: #ff4dad;
 }
 
 /* blog ___________________ */
-.ds-2col-fluid > .group-right, 
-.ds-2col-fluid > .group-left {
-  width: 48%;
+.node-type-blog #main {
+	@include ancho540;
+	margin: 80px auto;
 }
 
-.node-blog h2 {
-  text-transform: inherit;
-  margin-top: 10px;
-  line-height: 110%;
-  font-size: 175%;
+.node-type-blog .field-name-post-date {
+	text-align: center;
+	font-size: 90%;
+	color: #6b6b6b;
+	margin-bottom: 5px;
 }
 
-.node-blog .field-body {
-  margin-bottom: 50px;
+.node-type-blog h1 {
+    font-size: 140%;
+    font-weight: 900;
+    line-height: 110%;
+    text-transform: uppercase;
+	margin: 0;
+	padding: 0;
 }
 
-#block-disqus-disqus-comments {
-  width: 48%;
-  float: right;
-  margin-top: 50px;
+.node-type-blog h1:after {
+	border-bottom: 0;
+}
+
+.node-type-blog .field-name-field-blog-imagen {
+    margin: 50px 0;
+}
+
+.node-type-blog .field-name-body a {
+	color: $azul;
+}
+
+.node-type-blog .field-label {
+    border-bottom: 1px solid #000;
+    display: block;
+    font-weight: 100;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.node-type-blog .field-label .dots {
+	display: none;
 }
 
 /* buscador por tallas ___________________ */
@@ -1866,7 +1937,8 @@ div.status a {
 
 /* hover rosa ___________________ */
 #prefooter .content #block-menu-menu-informaci-n li a:hover, 
-#postfooter #block-block-5 a:hover {
+#postfooter #block-block-5 a:hover, 
+.view-blog .views-row .views-field-title-1 a:hover {
 	color: $rosa;
 }
 

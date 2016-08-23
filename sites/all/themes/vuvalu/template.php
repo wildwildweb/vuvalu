@@ -176,3 +176,16 @@ function vuvalu_uc_product_price($variables) {
 
   return $output;
 }
+
+/**
+ * Placeholder para Mailchimp
+ */
+function vuvalu_form_alter( &$form, &$form_state, $form_id )
+{
+    if (in_array( $form_id, array( 'mailchimp_signup_subscribe_block_suscripcion_al_newsletter_form')))
+    {
+		$form['mergevars']['EMAIL']['#attributes'] = array(
+		 'placeholder'=> t('Escribe tu email'),
+		);
+    }
+}
