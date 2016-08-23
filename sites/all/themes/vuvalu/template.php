@@ -129,3 +129,50 @@ function vuvalu_uc_cart_checkout_review($variables) {
 
   return $output;
 }
+
+/**
+ * Modificación para hacer que el list price salga vacío cuando es cero.
+ *
+ * Formats a product's price.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - element: An associative array render element containing:
+ *     - #value: Price to be formatted.
+ *     - #attributes: (optional) Array of attributes to apply to enclosing DIV.
+ *     - #title: (optional) Title to be used as label.
+ *
+ * @ingroup themeable
+ */
+function vuvalu_uc_product_price($variables) {
+  $element = $variables['element'];
+  $price = $element['#value'];
+  $attributes = isset($element['#attributes']) ? $element['#attributes'] : array();
+  $label = isset($element['#title']) ? $element['#title'] : '';
+
+  if (isset($attributes['class'])) {
+    array_unshift($attributes['class'], 'product-info');
+  }
+  else {
+    $attributes['class'] = array('product-info');
+  }
+
+  if (($price == 0) and (in_array("list-price", $attributes['class']))) {
+    $output = '';
+  }
+  else {
+    $output = '<div ' . drupal_attributes($attributes) . '>';
+    if ($label) {
+      $output .= '<span class="uc-price-label">' . $label . '</span> ';
+    }
+    $vars = array('price' => $price);
+    if (!empty($element['#suffixes'])) {
+      $vars['suffixes'] = $element['#suffixes'];
+    }
+    $output .= theme('uc_price', $vars);
+    $output .= drupal_render_children($element);
+    $output .= '</div>';
+  }
+
+  return $output;
+}
