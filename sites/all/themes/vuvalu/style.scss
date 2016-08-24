@@ -39,6 +39,12 @@ $tipo: "futura-pt", arial, helvetica, sans-serif !default;
   display: inline-block;
 }
 
+@mixin ancho735 {
+  width: 90%;
+  max-width: 735px;
+  margin: 0 auto;
+}
+
 @mixin ancho540 {
   width: 90%;
   max-width: 540px;
@@ -54,13 +60,14 @@ $tipo: "futura-pt", arial, helvetica, sans-serif !default;
 @mixin button {
     background: $rosa;
     color: $blanco;
-    font-weight: 700;
-    padding: 12px 30px;
+    font-weight: 100;
+    padding: 8px 50px;
     text-align: center;
     text-transform: uppercase;
     width: auto;
     border: none;
     font-size: 100%;
+	letter-spacing: 2px;
     -webkit-appearance: none;
     -webkit-border-radius:0; 
     border-radius:25px;
@@ -179,7 +186,7 @@ hr {
     height: 1px;
     margin-top: -35px;
     position: relative;
-    z-index: -1;
+    z-index: 0;
 }
 
 
@@ -499,13 +506,17 @@ h2 {
 header {
 	@include ancho100;
 	position: relative;
-	height: 80px;
-	line-height: 80px;
+	height: 130px;
 	display: block;
 }
 
 
 /* toolbar  ___________________ */
+#toolbar {
+    height: 80px;
+    line-height: 80px;
+}
+
 #block-block-9 {
     position: absolute;
     right: 0;
@@ -638,6 +649,8 @@ nav {
     background: $negro;
     height: 50px;
     width: 100%;
+    position: absolute;
+    top: 80px;
 }
 
 nav ul.menu {
@@ -708,14 +721,33 @@ nav .sf-menu li a {
 
 /* front  ___________________ */
 
-
-/* bloquesportada  ___________________ */
-
-
 /* slider  ___________________ */
 
 
-/* node-pagina  ___________________ */
+/* node pagina  ___________________ */
+.node-type-pagina #main {
+	@include ancho735;
+	margin: 80px auto;
+}
+
+/* node webform  ___________________ */
+.node-webform {
+	@include ancho540;
+}
+
+.node-webform .form-item {
+	margin: 40px 0;
+}
+
+.node-webform span.form-required {
+	display: none;
+}
+
+.node-webform label {
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	margin-bottom: 10px;
+}
 
 /* view-productos ___________________ */
 .page-productos #content {
@@ -934,6 +966,8 @@ nav .sf-menu li a {
 #prefooter h2 {
     background: url("images/logo-footer-provisional.png") no-repeat center top;
 	text-indent: -9000px;
+	position: relative;
+	z-index: 1;
 }
 
 #prefooter .content #block-menu-menu-informaci-n ul.menu {
@@ -1090,7 +1124,14 @@ footer .block h2 {
 
 
 /* contacto ______________*/
+.page-node-8 .field-name-body {
+	text-align: center;
+}
 
+.page-node-8 a.button {
+    display: table;
+    margin: 50px auto 0;
+}
 
 
 
@@ -1516,6 +1557,234 @@ tr.odd,
 
 /* layouts smaller than 550px ___________________*/
 @media screen and (max-device-width: 550px), screen and (max-width: 550px) {
+	/* menu button __________*/
+		.menu-trigger {
+		  display: inline-block;
+		  position: absolute;
+		  right: 10px;
+		  top: 10px;
+		  height: 50px;
+		  line-height: 50px;
+		  padding: 0 .8em;
+		  text-transform: uppercase;
+		  font-weight: bold;
+		  font-size: 130%;
+		  color: $blanco;
+		  z-index: 4;
+		}
+
+		.menu-trigger span {
+		  position: relative;
+		  display: inline-block;
+		  width: 18px;
+		  height: 2px;
+		  background-color: $negro;
+		  vertical-align: middle;
+		  margin-left: 10px;
+		  -webkit-transform: translateY(-2px);
+		  -moz-transform: translateY(-2px);
+		  -ms-transform: translateY(-2px);
+		  -o-transform: translateY(-2px);
+		  transform: translateY(-2px);
+		}
+
+		.menu-trigger span::before, 
+		.menu-trigger span::after {
+		  content: '';
+		  display: inline-block;
+		  position: absolute;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  background-color: inherit;
+		  -webkit-transition: all 0.2s;
+		  -moz-transition: all 0.2s;
+		  transition: all 0.2s;
+		}
+
+		.menu-trigger span::before {
+		  top: -6px;
+		}
+
+		.menu-trigger span::after {
+		  bottom: -6px;
+		}
+
+		.menu-trigger:hover span:before {
+		  top: -8px;
+		}
+
+		.menu-trigger:hover span::after {
+		  bottom: -8px;
+		}
+
+
+		/* menu fullscreen__________*/
+		#menubar {
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  /* Force Hardware Acceleration in WebKit */
+		  -webkit-transform: translateZ(0);
+		  -webkit-backface-visibility: hidden;
+		  /* we move this element off the canvas */
+		  -webkit-transform: translateY(-100%);
+		  -moz-transform: translateY(-100%);
+		  -ms-transform: translateY(-100%);
+		  -o-transform: translateY(-100%);
+		  transform: translateY(-100%);
+		  -webkit-transition-property: -webkit-transform;
+		  -moz-transition-property: -moz-transform;
+		  transition-property: transform;
+		  -webkit-transition-duration: 0.5s;
+		  -moz-transition-duration: 0.5s;
+		  transition-duration: 0.5s;
+		  z-index: 4;
+		  background: $negro;
+		}
+
+		#menubar.is-visible ul {
+		  height: 100%;
+			margin-top: 100px;
+		}
+
+		#menubar li {
+		    display: block;
+			position: relative;
+		    height: 5%;
+		    text-align: center;
+			margin-right: 0;
+			width: 100%;
+			z-index: 1;
+			margin-bottom: 10%;
+		}
+	
+		#menubar li:before {
+		    border-bottom: 1px solid #fff;
+		    bottom: 0;
+		    content: "";
+		    height: 1px;
+		    left: 0;
+		    margin: 0 auto;
+		    position: absolute;
+		    right: 0;
+		    width: 10%;
+		}
+
+		#menubar li a {
+		  position: relative;
+		  display: block;
+		  padding: 0 25%;
+		  height: 100%;
+		  color: $blanco;
+		  font-size: 250%;
+		  font-weight: 100;
+		}
+
+
+		#menubar li a:hover {
+		  color: $rosa;
+		}
+	
+		#menubar li:hover:before {
+		  border-bottom: 1px solid $rosa;
+		} 
+
+		#menubar li:last-child a {
+		  border-bottom: none;
+		}
+
+		/* close button */
+		#menubar .close-menu {
+		  position: absolute;
+		  top: 0;
+		  right: 0;
+		  display: inline-block;
+		  width: 40px;
+		  height: 40px;
+		  background-color: $rosa;
+		  /* image replacement */
+		  overflow: hidden;
+		  text-indent: 100%;
+		  white-space: nowrap;
+		}
+
+		#menubar .close-menu:before, 
+		#menubar .close-menu:after {
+		  content: '';
+		  display: inline-block;
+		  position: absolute;
+		  top: 18px;
+		  left: 10px;
+		  width: 20px;
+		  height: 3px;
+		  background-color: $blanco;
+		  -webkit-transition-property: -webkit-transform;
+		  -moz-transition-property: -moz-transform;
+		  transition-property: transform;
+		  -webkit-transition-duration: 0.3s;
+		  -moz-transition-duration: 0.3s;
+		  transition-duration: 0.3s;
+		}
+
+		#menubar .close-menu:before {
+		  -webkit-transform: rotate(45deg);
+		  -moz-transform: rotate(45deg);
+		  -ms-transform: rotate(45deg);
+		  -o-transform: rotate(45deg);
+		  transform: rotate(45deg);
+		}
+
+		#menubar .close-menu:after {
+		  -webkit-transform: rotate(135deg);
+		  -moz-transform: rotate(135deg);
+		  -ms-transform: rotate(135deg);
+		  -o-transform: rotate(135deg);
+		  transform: rotate(135deg);
+		}
+
+		#menubar .close-menu:hover:before {
+		  -webkit-transform: rotate(225deg);
+		  -moz-transform: rotate(225deg);
+		  -ms-transform: rotate(225deg);
+		  -o-transform: rotate(225deg);
+		  transform: rotate(225deg);
+		}
+
+		#menubar .close-menu:hover:after {
+		  -webkit-transform: rotate(315deg);
+		  -moz-transform: rotate(315deg);
+		  -ms-transform: rotate(315deg);
+		  -o-transform: rotate(315deg);
+		  transform: rotate(315deg);
+		}
+
+		#menubar.is-visible {
+		  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+		  -webkit-transform: translateY(0);
+		  -moz-transform: translateY(0);
+		  -ms-transform: translateY(0);
+		  -o-transform: translateY(0);
+		  transform: translateY(0);
+		}
+
+		/* no-js */
+		.no-js #menubar {
+		  position: static;
+		  -webkit-transform: translateY(0);
+		  -moz-transform: translateY(0);
+		  -ms-transform: translateY(0);
+		  -o-transform: translateY(0);
+		  transform: translateY(0);
+		}
+
+		.no-js #menubar .close-menu {
+		  display: none;
+		}
+	
+	
 }  
 
 

@@ -4,6 +4,7 @@ screenshot = screenshot.png
 core = 7.x
 
 stylesheets[all][] = style.css
+scripts[] = js/menu-trigger.js
 
 fonts[typekit_api][] = "futura-pt#n7"
 fonts[typekit_api][] = "futura-pt#n3"

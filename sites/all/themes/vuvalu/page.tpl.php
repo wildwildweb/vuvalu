@@ -13,10 +13,16 @@
       <div class="logo-menu" class="clearfix">
         <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo"><?php print t('Home'); ?></a>
       </div>
+	  
+      <a class="menu-trigger" href="#menubar"><span></span></a>
+	  <div id="main-nav">
+	    <?php print render($page['menubar']); ?>
+	    <a href="#0" class="close-menu">Close<span></span></a> 
+      </div>
       
     </header>   
 
-    <?php print render($page['menubar']); ?>
+    
 
 	<?php if ($page['precontent']): ?>
 	  <?php print render($page['precontent']); ?>
@@ -53,8 +59,12 @@
       <?php if ($page['prefooter']): ?>
         <?php print render($page['prefooter']); ?>
       <?php endif; ?>
+	  
+	   </section>
 
+  <footer role="banner" class="clearfix">
     <?php print render($page['footer']); ?>
+  </footer>	
 	    
       <?php if ($page['postfooter']): ?>
 	    <?php print render($page['postfooter']); ?>
