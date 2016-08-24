@@ -1,4 +1,5 @@
-/*
+@charset "UTF-8";
+/* $Id: style.css Exp $
 
  credits _____________
  theme: vuvalu.
@@ -925,216 +926,68 @@ nav .sf-menu li a {
 
 
 /* node-product  ___________________ */
-.uc-product-node .node-left {
-  display: block;
-  width: 48%;
-  float: left;
-  position: relative;
+.ds-2col-stacked > .group-left, 
+.ds-2col-stacked > .group-right {
+	width: 48%;
 }
 
-.uc-product-node .node-left img {
-  max-width: 460px;
-  margin-bottom: 8px;
+.field-name-uc-product-image .item-list ul li {
+    margin: 2% 2% 0 0;
 }
 
-.uc-product-node .node-left span.rebajado {
-  display: block;
-  height: 147px;
-  position: absolute;
-  right: 0;
-  text-indent: -9000px;
-  top: 0;
-  width: 108px;
+.group-cabecera .field {
+    float: left;
 }
 
-.uc-product-node .node-left span.agotado {
-  display: block;
-  height: 147px;
-  position: absolute;
-  right: 0;
-  text-indent: -9000px;
-  top: 0;
-  width: 108px;
+.group-cabecera .field a {
+    color: #9b9b9b;
+    font-size: 90%;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-.uc-product-node .node-right {
-  display: block;
-  width: 46%;
-  float: right;
+.field-name-field-producto-tipo a:after {
+    content: " ·";
+    margin-right: 5px;
 }
 
-.uc-product-node h1 {
-  font-size: 160%;
-  font-weight: 300;
-  margin: 0 0 18px;
-  padding: 0;
-  line-height: 110%;
-  text-transform: uppercase;
+.group-tabs .resp-tabs-list {
+    display: block;
+    float: left;
+    width: 100%;
 }
 
-.uc-product-node .node-right .uc-price-label, 
-.add-to-cart .form-required {
-  display: none;
+.field-name-title h1 {
+    display: block;
+    float: left;
+    font-size: 140%;
+    line-height: 110%;
+    margin: 20px 0;
+    text-align: left;
+    width: 100%;
 }
 
-.uc-product-node .node-right .list-price .uc-price {
-  text-decoration: line-through;
-  color: #bababa;
-  font-size: 120%;
+.field-name-title h1:after {
+	border-bottom: none;
 }
 
-.uc-product-node .product-info.list-price {
-  float: left;
-  margin: 0 0 0 3px;
+.display-price {
+    float: left;
+    font-size: 200%;
+    font-weight: 100;
+    margin-bottom: 50px;
+    text-align: left;
+    width: 100%;
 }
 
-.uc-product-node .node-right .display-price {
-  clear: right;
-  color: #39d6c5;
-  float: none;
-  font-size: 180%;
-  font-weight: normal;
-  margin: 0 0 10px;
-  padding: 0;
-  text-align: left;
+.price-suffixes {
+	display: none;
 }
 
-.uc-product-node .node-right .price-suffixes, 
-.page-search .price-suffixes {
-  font-size: 55%;
-  font-weight: 100;
-  margin-left: 10px;
-}
-
-.uc-product-node .node-right h3 {
-  display: block;
-  float: right;
-  font-size: 100%;
-  width: 100%;
-  margin-top: 40px;
-}
-
-.uc-product-node .node-right .field-body {
-  float: left;
-  margin: 8px 0 20px;
-  width: 100%;
-}
-
-.add-to-cart .attributes {
-  float: left;
-  width: 100%;
-}
-
-.add-to-cart .attribute {
-  display: block;
-  float: left;
-  width: 45%;
-}
-
-.add-to-cart input[type="text"] {
-  width: 30px;
-  text-align: center;
-  margin-top: 0;
-  border: 1px solid #b4b4b4
-}
-
-.add-to-cart .form-type-uc-quantity {
-  float: left;
-  display: block;
-  margin-right: 40px
-}
-
-.add-to-cart .form-type-uc-quantity #edit-qty, 
-.add-to-cart, 
-span.envio {
-  float: left;
-}
-
-.add-to-cart .form-type-uc-quantity label {
-  float: right;
-  height: 30px;
-  line-height: 38px;
-  margin-left: 10px;
-}
-
-.add-to-cart .form-actions {
-  display: block;
-  float: left;
-}
-.add-to-cart input.node-add-to-cart {
-  background: none repeat scroll 0 0 #39d6c5;
-  border: medium none;
-  color: $blanco;
-  font-size: 100%;
-  font-weight: 700;
-  padding: 9px 24px;
-  text-align: center;
-  text-transform: uppercase;
-  width: auto;
-}
-
-.add-to-cart .uc-out-stock-processed .form-type-select label, 
-.add-to-cart .form-type-select select {
-  width: 140px;
-}
-
-.uc_out_of_stock_html p {
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 130%;
-  margin-left: -40px;
-  color: #FF9598;
-}
-
-
-.uc-product-node .tallas {
-  float: left;
-  margin-bottom: 20px;
-  width: 100%;
-  font-weight: 700;
-}
-
-
-.group-informacion-adicional {
-  display: block;
-  float: left;
-  width: 100%;
-}
-
-span.envio {  
-  font-weight: 700;
-  margin: 40px 0;
-}
-
-.addthis {
-  display: block;
-  float: left;
-  margin: 20px 0;
-  width: 100%;
-}
-
-.addthis_toolbox {
-  width: 150px !important;
-}
-
-.addthis_32x32_style .at15t_facebook {
-  background-position: center center !important;
-  background-image: url("images/ico-facebook.png") !important;
-}
-
-.addthis_32x32_style .at15t_twitter {
-  background-position: center center !important;
-  background-image: url("images/ico-twitter.png") !important;
-}
-
-.addthis_32x32_style .at15t_google_plusone_share {
-  background-position: center center !important;
-  background-image: url("images/ico-google.png") !important;
-}
-
-.addthis_32x32_style .at15t_pinterest_share {
-  background-position: center center !important;
-  background-image: url("images/ico-pinterest.png") !important;
+.add-to-cart input.form-submit {
+    font-weight: 100;
+    padding: 10px 50px;
+	margin: 30px 0;
 }
 
 /* prefooter ___________________ */
@@ -1906,7 +1759,8 @@ div.status a {
 #prefooter .content #block-menu-menu-informaci-n li a:hover, 
 #postfooter #block-block-5 a:hover, 
 .view-blog .views-row .views-field-title-1 a:hover, 
-.view-listado-productos .views-field-title-field a:hover {
+.view-listado-productos .views-field-title-field a:hover, 
+.group-cabecera .field a:hover {
 	color: $rosa;
 }
 
