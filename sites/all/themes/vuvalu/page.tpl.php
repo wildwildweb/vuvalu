@@ -15,10 +15,8 @@
       </div>
 	  
       <a class="menu-trigger" href="#menubar"><span></span></a>
-	  <div id="main-nav">
-	    <?php print render($page['menubar']); ?>
-	    <a href="#0" class="close-menu">Close<span></span></a> 
-      </div>
+	  <?php print render($page['menubar']); ?>
+	    
       
     </header>   
 
