@@ -189,3 +189,14 @@ function vuvalu_form_alter( &$form, &$form_state, $form_id )
 		);
     }
 }
+
+/**
+ * Magnific Popup para nodo producto
+ */
+function vuvalu_preprocess_node(&$variables) {
+  if ($variables['type'] == 'product') {
+    drupal_add_js(drupal_get_path('theme', 'vuvalu') . '/js/jquery.magnific-popup.min.js');
+    drupal_add_js(drupal_get_path('theme', 'vuvalu') . '/js/product-node-popup.js');
+    drupal_add_css(drupal_get_path('theme', 'vuvalu') . '/magnific-popup.css');
+  }
+}
